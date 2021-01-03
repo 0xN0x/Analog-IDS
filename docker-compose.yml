@@ -1,0 +1,21 @@
+version: '3'
+services:
+  openvpn:
+    cap_add:
+      - NET_ADMIN
+    build: ./ovpn
+    container_name: openvpn
+    ports:
+      - "1194:1194/udp"
+    restart: always
+    volumes:
+      - ./openvpn-data/conf:/etc/openvpn
+  syslogserver:
+    build: ./rsyslog
+    hostname: syslog
+    container_name: syslog
+    restart: always
+    volumes:
+      - "./log:/var/log"
+    cap_add:
+      - SYSLOG
