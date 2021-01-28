@@ -37,3 +37,8 @@ docker-compose run --rm openvpn ovpn_getclient $CLIENTNAME > $CLIENTNAME.ovpn
 ```
 docker-compose run --rm openvpn ovpn_revokeclient $CLIENTNAME remove
 ```
+
+- Test Syslog server :
+```
+docker run --log-driver syslog --log-opt syslog-address=tcp://192.168.0.5:514 alpine echo hello world
+```
