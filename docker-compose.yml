@@ -23,3 +23,10 @@ services:
     image: rethinkdb:latest
     ports:
       - "38080:8080"
+  app:
+    build: ./app
+    volumes:
+     - ./app/:/app
+    command: npm start
+    ports:
+     - 80:3000
