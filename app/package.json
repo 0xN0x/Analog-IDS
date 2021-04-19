@@ -19,6 +19,8 @@
     "helmet": "^4.4.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
-    "pug": "2.0.0-beta11"
+    "pug": "2.0.0-beta11",
+    "rethinkdbdash": "~2.3.31",
+    "bcrypt": "~5.0.1"
   }
 }

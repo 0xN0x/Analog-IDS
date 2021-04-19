@@ -1,5 +1,5 @@
 const data = require(`../settings.json`)
-
+const db = require('../lib/db.js')
 
 /** Routes de l'API
  * @module routers/api
@@ -84,6 +84,15 @@ router.get('/version', (req, res, next) => {
  * @memberof ApiRoutes
  */
 // ================ //
+
+
+router.post('/login', async (req, res, next) => {
+  if (db.checkPasswordValidity(req.body.mail, req.body.password)) {
+    res.status(200).redirect('/')
+  } else {
+    res.status(401).send({error: 401, message: "Bad mail or password"})
+  }
+});
 
 
 /**
