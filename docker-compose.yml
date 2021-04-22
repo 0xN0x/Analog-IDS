@@ -3,12 +3,19 @@ services:
   collector:
     build: ./collector
     container_name: collector
+    restart: always
+    volumes: 
+      - ./collector/rsyslog.conf:/etc/rsyslog.conf
+      - data:/var/log
     ports: 
       - "514:514/tcp"
       - "514:514/udp"
+  transfo:
+    build: ./transfo
+    container_name: transfo
+    restart: always
     volumes: 
-      - ./collector/rsyslog.conf:/etc/rsyslog.conf
-      - ./collector/data:/var/log
+      - data:/data
   db:
     build: ./db
     container_name: db
@@ -23,3 +30,6 @@ services:
     command: npm start
     ports:
     - 80:3000
+
+volumes: 
+  data:
