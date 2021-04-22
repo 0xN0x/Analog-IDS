@@ -3,9 +3,12 @@ services:
   collector:
     build: ./collector
     container_name: collector
-    restart: always
-    ports:
-      - "3522:22"
+    ports: 
+      - "514:514/tcp"
+      - "514:514/udp"
+    volumes: 
+      - ./collector/rsyslog.conf:/etc/rsyslog.conf
+      - ./collector/data:/var/log
   db:
     build: ./db
     container_name: db

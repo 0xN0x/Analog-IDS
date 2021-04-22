@@ -1,20 +1,14 @@
-FROM debian:latest
+FROM alpine
 
-RUN apt-get update
+RUN apk add --no-cache rsyslog
 
-RUN apt-get install -y openssh-server
-RUN mkdir /var/run/sshd
+COPY rsyslog.conf /etc/rsyslog.conf
 
-RUN echo 'root:root' | chpasswd
+VOLUME /var/log
 
-RUN sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
-RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+WORKDIR /var/log
 
-RUN mkdir /root/.ssh
+EXPOSE 514/tcp \
+    514/udp
 
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-EXPOSE 22
-
-CMD    ["/usr/sbin/sshd", "-D"]
+ENTRYPOINT [ "rsyslogd", "-n" ]
