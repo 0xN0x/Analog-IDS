@@ -8,6 +8,8 @@ VOLUME /var/log
 
 WORKDIR /var/log
 
+RUN echo '' > syslog
+
 EXPOSE 514/tcp \
     514/udp
 
