@@ -16,6 +16,7 @@ services:
     restart: always
     depends_on: 
       - collector
+      - db
     volumes: 
       - data:/data
   db:
