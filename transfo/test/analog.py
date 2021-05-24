@@ -1,23 +1,4 @@
 import re
-from rethinkdb import RethinkDB
-
-class Database:
-    def __init__(self):
-        r = RethinkDB()
-        r.connect('db', 28015).repl()
-        self.r = r
-
-    def init(self):
-        r = self.r
-        if 'analog' not in r.db_list().run():
-            r.db_create('analog').run()
-            r.db('analog').table_create('log').run()
-        if 'test' in r.db_list().run():
-            r.db_drop('test').run()
-
-    def sendLog(self, log):
-        r = self.r
-        r.db('analog').table('log').insert(log).run()
 
 class Log:
     def __init__(self, line):
