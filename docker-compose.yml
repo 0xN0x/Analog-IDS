@@ -6,7 +6,7 @@ services:
     restart: always
     volumes: 
       - ./collector/rsyslog.conf:/etc/rsyslog.conf
-      - data:/var/log
+      - data:/var/log/
     ports: 
       - "514:514/tcp"
       - "514:514/udp"
