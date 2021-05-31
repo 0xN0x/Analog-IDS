@@ -25,11 +25,11 @@ services:
     restart: always
     ports: 
       - "38080:8080"
-  app:
-    build: ./app
-    container_name: app
+  web:
+    build: ./web
+    container_name: web
     volumes: 
-      - ./app/:/app
+      - ./web/:/web
     command: npm start
     ports:
     - 80:3000

@@ -1,0 +1,28 @@
+{
+  "name": "analog",
+  "version": "0.4.1",
+  "main": "app.js",
+  "private": true,
+  "contributors": [
+    "Mickael Courtiade <mickael.courtiade@protonmail.com>",
+    "Thomas Lebrun <thomas.lebrun123@gmail.com>",
+    "Lucas Gicquel <lucas.gicquel@gmail.com>"
+  ],
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "bcrypt": "~5.0.1",
+    "bcrypt-salt": "^1.1.9",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "^4.16.4",
+    "helmet": "^4.4.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "pug": "2.0.0-beta11",
+    "rethinkdbdash": "^2.3.31",
+    "socket.io": "^4.1.2",
+    "uuid": "^8.3.2"
+  }
+}
