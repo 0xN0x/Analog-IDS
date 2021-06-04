@@ -31,6 +31,23 @@ You can replace de 192.168.1.22 with the IP that match with the Analog server
 # For more information install rsyslog-doc and see
 # /usr/share/doc/rsyslog-doc/html/configuration/index.html
 *.* @@192.168.1.22:514
+
+module(load="imuxsoxk")
+module(load="imfile")
+
+# Basic logs
+auth,authpriv.none        /var/log/auth.log
+*.*;auth,authpriv.none    /var/log/syslog
+
+# Others
+input(type="imfile"
+    File="/var/log/apache2/access.log
+    Tag="apache"
+)
+
+# Global directives
+$WorkDirectory /var/spool/rsyslog
+
 ```
 
 - Restart syslog service
