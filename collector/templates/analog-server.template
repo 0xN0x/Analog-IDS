@@ -1,0 +1,4 @@
+cn=analog-server
+dns_name=analog-server.local
+tls_www_client
+tls_www_server

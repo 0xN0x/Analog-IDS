@@ -1,0 +1,4 @@
+expiration_days=3650
+tls_www_client
+tls_www_server
+dns_name=analog-server.local

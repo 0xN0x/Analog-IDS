@@ -16,7 +16,17 @@ docker-compose up -d
 
 - Install rsyslog
 ```bash
-sudo apt install rsyslog
+sudo apt install rsyslog rsyslog-gnutls
+```
+
+- Create rsyslog-tls folder
+```bash
+sudo mkdir /etc/rsyslog-tls
+```
+
+- On Analog server, run cert-client script :
+```bash
+docker exec -it collector cert-client
 ```
 
 - Edit rsyslog.conf
@@ -24,29 +34,35 @@ sudo apt install rsyslog
 sudo vim /etc/rsyslog.conf
 ```
 
-You can replace de 192.168.1.22 with the IP that match with the Analog server
 ```bash
-# /etc/rsyslog.conf configuration file for rsyslog
-#
-# For more information install rsyslog-doc and see
-# /usr/share/doc/rsyslog-doc/html/configuration/index.html
-*.* @@192.168.1.22:514
-
-module(load="imuxsoxk")
+# Modules
+$ModLoad imuxsock
 module(load="imfile")
 
-# Basic logs
-auth,authpriv.none        /var/log/auth.log
-*.*;auth,authpriv.none    /var/log/syslog
+# Global directives
+$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
 
-# Others
+$DefaultNetstreamDriver gtls
+
+$DefaultNetstreamDriverCAFile /etc/rsyslog-tls/ca.pem
+$DefaultNetstreamDriverCertFile /etc/rsyslog-tls/analog-client.crt
+$DefaultNetstreamDriverKeyFile /etc/rsyslog-tls/analog-client.pem
+
+$ActionSendStreamDriverAuthMode anon
+$ActionSendStreamDriverMode 1
+
+# Rules
 input(type="imfile"
-    File="/var/log/apache2/access.log
+    File="/var/log/apache2/access.log"
     Tag="apache"
 )
 
-# Global directives
-$WorkDirectory /var/spool/rsyslog
+input(type="imfile"
+    File="/var/log/nginx/access.log"
+    Tag="nginx"
+)
+
+*.* @@192.168.1.22:514
 
 ```
 

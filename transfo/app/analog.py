@@ -31,7 +31,6 @@ class Log:
         line = ' '.join(line[3:])
         try:
             app_module = __import__("modules.%s" % app, fromlist=["modules"])
-            print(app_module)
             line = app_module.main(line)
             return date, host, app, line, True
         except:
