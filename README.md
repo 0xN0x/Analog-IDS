@@ -16,7 +16,7 @@ docker-compose up -d
 
 - Install rsyslog
 ```bash
-sudo apt install rsyslog rsyslog-gnutls
+sudo apt install rsyslog rsyslog-gnutls rsync
 ```
 
 - Create rsyslog-tls folder
@@ -62,7 +62,7 @@ input(type="imfile"
     Tag="nginx"
 )
 
-*.* @@192.168.1.22:514
+*.* @@<ip_analog_server>:514
 
 ```
 
