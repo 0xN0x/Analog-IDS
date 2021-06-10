@@ -16,27 +16,35 @@ class Database:
             r.db_drop('test').run()
 
     def sendLog(self, log):
-        r = self.r
-        r.db('analog').table('log').insert(log).run()
+        if log is not None:
+            r = self.r
+            r.db('analog').table('log').insert(log).run()
+        else:
+            pass
 
 class Log:
     def __init__(self, line):
         self.line = line
-        self.date, self.host, self.app, self.line, self.parsed = self.logParser()
+        try:
+            self.date, self.host, self.app, self.line = self.logParser()
+        except:
+            pass
 
     def logParser(self):
         line = self.line.split(' ')
         date, host = line[0], line[1]
-        app = re.search(r'^(\w+)', line[2]).group().lower()
-        line = ' '.join(line[3:])
         try:
+            app = re.search(r'^(\w+)', line[2]).group().lower()
+            line = ' '.join(line[3:])
             app_module = __import__("modules.%s" % app, fromlist=["modules"])
             line = app_module.main(line)
-            return date, host, app, line, True
-        except:
-            return date, host, app, [line], False
+            print(line)
+            return date, host, app, line
+        except Exception as e:
+            print('logParser -->', e)
     
     def result(self):
-        return {"date": self.date, "host": self.host, "app": self.app, "data": self.line, "parsed": self.parsed}
-
-
+        try:
+            return {"date": self.date, "host": self.host, "app": self.app, "data": self.line}
+        except Exception as e:
+            print('result -->', e)

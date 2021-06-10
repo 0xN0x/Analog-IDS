@@ -16,7 +16,6 @@ def read_line(f, db):
                 time.sleep(0.1)
                 continue
             line += tail
-            res = Log(line).result()
             db.sendLog(Log(line).result())
 
 if __name__ == '__main__':
