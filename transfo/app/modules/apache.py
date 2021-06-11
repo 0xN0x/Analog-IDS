@@ -11,10 +11,7 @@ OTHER_L = ['wso.php','phpshell.php','shell_uploader.php','mysql.php','r57.php','
 
 def main(line):
     line = re.search(r'(?P<ip>[(\d\.)]+) - - \[(?P<date>.*?) (.*?)] "(?P<method>\w+) (?P<request_path>.*?) HTTP\/(?P<http_version>.*?)" (?P<status_code>\d+) (?P<response_size>\d+) "(?P<referrer>.*?)" "(?P<user_agent>.*?)"',line).groupdict()
-    try:
-        line = analyse(line)
-    except Exception as e:
-        print(e)
+    line = analyse(line)
     return [line]
 
 def analyse(line):

@@ -40,11 +40,11 @@ class Log:
             line = app_module.main(line)
             print(line)
             return date, host, app, line
-        except Exception as e:
-            print('logParser -->', e)
+        except:
+            pass
     
     def result(self):
         try:
             return {"date": self.date, "host": self.host, "app": self.app, "data": self.line}
-        except Exception as e:
-            print('result -->', e)
+        except:
+            pass

@@ -9,7 +9,6 @@ services:
       - data:/var/log/
     ports: 
       - "514:514/tcp"
-      - "514:514/udp"
   transfo:
     build: ./transfo
     container_name: transfo
@@ -23,8 +22,6 @@ services:
     build: ./db
     container_name: db
     restart: always
-    ports: 
-      - "38080:8080"
   web:
     build: ./web
     container_name: web
@@ -32,7 +29,7 @@ services:
       - ./web/:/web
     command: npm start
     ports:
-    - 80:3000
+      - 80:3000
 
 volumes: 
   data:

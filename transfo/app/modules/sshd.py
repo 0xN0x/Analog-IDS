@@ -61,7 +61,7 @@ def parse_received_disconnected(line):
     data = data.split(":11: ")
     action = data[1]
     data = data[0].split(" ")
-    return {"ip": data[0], "port": data[2], "action": action, "msg": "received disconnected"}
+    return {"ip": data[0], "port": data[2], "action": action, "msg": "Disconnected"}
 
 def parse_disconnected_from(line):
     line = line.split("Disconnected from user ")
