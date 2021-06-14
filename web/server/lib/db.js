@@ -1,7 +1,11 @@
 const bcrypt = require('bcrypt');
 const BcryptSalt = require('bcrypt-salt');
 const uuid = require('uuid');
-const r = require('rethinkdbdash')({ db: 'analog' });
+const r = require('rethinkdbdash')({ 
+    host: 'db',
+    port: '28015',
+    db: 'analog'
+});
 
 const bs = new BcryptSalt();
 

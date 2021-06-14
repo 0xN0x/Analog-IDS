@@ -1,9 +1,12 @@
 {
-  "name": "react-material-dashboard",
-  "author": "DeviasIO",
-  "licence": "MIT",
+  "name": "analog",
   "version": "1.0.0",
-  "private": false,
+  "private": true,
+  "contributors": [
+    "Mickael Courtiade <mickael.courtiade@protonmail.com>",
+    "Thomas Lebrun <thomas.lebrun123@gmail.com>",
+    "Lucas Gicquel <lucas.gicquel@gmail.com>"
+  ],
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

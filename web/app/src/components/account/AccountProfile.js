@@ -2,11 +2,8 @@ import moment from 'moment';
 import {
   Avatar,
   Box,
-  Button,
   Card,
-  CardActions,
   CardContent,
-  Divider,
   Typography
 } from '@material-ui/core';
 
@@ -23,12 +20,13 @@ const AccountProfile = (props) => (
         }}
       >
         <Avatar
-          src={user.avatar}
+          src={`https://ui-avatars.com/api/?name=${user.firstname}-${user.lastname}&size=100`}
           sx={{
             height: 100,
             width: 100
           }}
         />
+        <br />
         <Typography
           color="textPrimary"
           gutterBottom
@@ -50,16 +48,6 @@ const AccountProfile = (props) => (
         </Typography>
       </Box>
     </CardContent>
-    <Divider />
-    <CardActions>
-      <Button
-        color="primary"
-        fullWidth
-        variant="text"
-      >
-        Upload picture
-      </Button>
-    </CardActions>
   </Card>
 );
 
