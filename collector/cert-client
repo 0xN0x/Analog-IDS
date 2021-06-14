@@ -1,5 +1,5 @@
 #!/bin/bash
-read -p $'\e[31mCommon Name\e[0m: ' cn
+read -p $'\e[31mNom du client Analog\e[0m: ' cn
 cat > /templates/analog-client.template << EOF
 cn=$cn
 dns_name=$cn.local
@@ -18,11 +18,29 @@ certtool --generate-privkey --outfile /opt/CA/$cn.pem --sec-param High &>/dev/nu
 certtool --generate-request --load-privkey /opt/CA/$cn.pem --outfile /opt/CA/$cn.csr --template=/templates/analog-client.template &>/dev/null
 certtool --generate-certificate --load-request /opt/CA/$cn.csr --outfile /opt/CA/$cn.crt --load-ca-certificate /opt/CA/ca.pem --load-ca-privkey /opt/CA/ca-key.pem --template=/templates/ca-analog-client.template &>/dev/null
 
-echo -e "\033[33;1m[!] To send the certificate, you must enter your IP address and username to the Analog client\033[0m"
-echo -e "\033[33;1m[!] Make sure you have created the /etc/rsyslog-tls folder and that you have write permission to send the certificates\033[0m"
-read -p $'\e[31mIP address\e[0m: ' ipaddress
-read -p $'\e[31mUsername\e[0m: ' username
+sendCert(){
+    echo -e "\033[33;1m[!] Pour envoyer les certificats, vous devez entrer votre adresse IP et votre nom d'utilisateur dans le client Analog\033[0m"
+    echo -e "\033[33;1m[!] Assurez-vous que vous avez créé le dossier /etc/rsyslog-tls et que vous avez le droit d'écriture pour envoyer les certificats\033[0m"
+    read -p $'\e[31mAdresse IP\e[0m: ' ipaddress
+    read -p $'\e[31mNom d\'utilisateur\e[0m: ' username
 
-echo -e "\033[33;1m[!] Make sure you have created the /etc/rsyslog-tls folder and that you have write permission to send the certificates\033[0m"
-rsync -aP /opt/CA/$cn.* $username@$ipaddress:/etc/rsyslog-tls/
-rsync -aP /opt/CA/ca.pem $username@$ipaddress:/etc/rsyslog-tls/
+    rsync -aP /opt/CA/$cn.* $username@$ipaddress:/etc/rsyslog-tls/
+    rsync -aP /opt/CA/ca.pem $username@$ipaddress:/etc/rsyslog-tls/
+}
+
+getCert(){
+    echo -e "\033[33;1m[!] Vous pouvez ensuite récupérer les certificats avec les commandes suivantes :\033[0m"
+    echo -e "\033[33;1m     'docker cp collector:/opt/CA/$cn.crt collector'\033[0m"
+    echo -e "\033[33;1m     'docker cp collector:/opt/CA/$cn.pem collector'\033[0m"
+    echo -e "\033[33;1m     'docker cp collector:/opt/CA/ca.pem collector'\033[0m"
+}
+
+echo -e "\033[33;1m[?] Voulez-vous envoyer les certificats directement au client ?\033[0m"
+read -p $' \e[33;1m[?] Continuer (y/n)?\e[0m: ' choice
+func=$1
+case "$choice" in 
+    y|Y ) sendCert;;
+    n|N ) getCert;;
+    * ) echo "invalid";;
+esac
+

@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 RUN apt-get update -y && \
     apt install -y rsyslog rsyslog-gnutls gnutls-bin rsync openssh-client
@@ -33,7 +33,6 @@ COPY syslog syslog
 
 COPY cert-client /bin/cert-client
 
-EXPOSE 514/tcp \
-    514/udp 
+EXPOSE 514/tcp
 
 CMD [ "rsyslogd", "-n" ]
