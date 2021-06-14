@@ -12,20 +12,13 @@ ADD templates /templates
 WORKDIR /opt/CA
 
 # CA
-RUN certtool --generate-privkey --outfile ca-key.pem --sec-param High
-
-RUN certtool --generate-self-signed --load-privkey ca-key.pem --outfile ca.pem --template=/templates/ca.template
-
-# Analog-server
-RUN certtool --generate-privkey --outfile analog-server.pem --sec-param High
-
-RUN certtool --generate-request --load-privkey analog-server.pem --outfile analog-server.csr --template=/templates/analog-server.template
-
-RUN certtool --generate-certificate --load-request analog-server.csr --outfile analog-server.crt --load-ca-certificate ca.pem --load-ca-privkey ca-key.pem --template=/templates/ca-analog-server.template
-
-RUN mkdir /etc/rsyslog-tls/
-
-RUN mv analog-server.* /etc/rsyslog-tls/
+RUN certtool --generate-privkey --outfile ca-key.pem --sec-param High && \
+    certtool --generate-self-signed --load-privkey ca-key.pem --outfile ca.pem --template=/templates/ca.template && \
+    certtool --generate-privkey --outfile analog-server.pem --sec-param High && \
+    certtool --generate-request --load-privkey analog-server.pem --outfile analog-server.csr --template=/templates/analog-server.template && \
+    certtool --generate-certificate --load-request analog-server.csr --outfile analog-server.crt --load-ca-certificate ca.pem --load-ca-privkey ca-key.pem --template=/templates/ca-analog-server.template && \
+    mkdir /etc/rsyslog-tls/ && \
+    mv analog-server.* /etc/rsyslog-tls/
 
 WORKDIR /var/log
 

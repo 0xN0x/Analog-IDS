@@ -21,15 +21,15 @@ services:
     build: ./db
     container_name: db
     restart: always
-    ports: 
-      - "38080:8080"
   web:
     build: ./web
     container_name: web
+    depends_on: 
+      - transfo
+    command: npm start
     volumes: 
       - ./web/:/web
       - data:/var/log/
-    command: npm start
     ports:
       - 80:3000
 

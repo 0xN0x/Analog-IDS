@@ -32,7 +32,7 @@ def analyse(line):
     return line
 
 def XSS_check(line):
-    line = unquote(line['request_path']) + unquote(line['referrer'])
+    line = unquote(line['request_path'])
     line = unquote(line)
     line = line.replace('\n', '')
     line = line.replace(' ', '').lower()
@@ -45,7 +45,7 @@ def XSS_check(line):
     return check
 
 def SQLi_check(line):
-    line = unquote(line['request_path']) + unquote(line['referrer'])
+    line = unquote(line['request_path'])
     line = unquote(line)
     line = line.replace('\n', '')
     line = line.replace(' ', '').lower()
@@ -58,7 +58,7 @@ def SQLi_check(line):
     return check
 
 def PT_check(line):
-    line = unquote(line['request_path']) + unquote(line['referrer'])
+    line = unquote(line['request_path'])
     line = unquote(line)
     line = line.replace('\n', '')
     line = line.replace(' ', '').lower()
@@ -71,7 +71,7 @@ def PT_check(line):
     return check
 
 def LDAPi_check(line):
-    line = unquote(line['request_path']) + unquote(line['referrer'])
+    line = unquote(line['request_path'])
     line = unquote(line)
     line = line.replace('\n', '')
     line = line.replace(' ', '').lower()
@@ -84,7 +84,7 @@ def LDAPi_check(line):
     return check
 
 def CRLFi_check(line):
-    line = unquote(line['request_path']) + unquote(line['referrer'])
+    line = unquote(line['request_path'])
     line = unquote(line)
     line = line.replace('\n', '')
     line = line.replace(' ', '').lower()
@@ -97,7 +97,7 @@ def CRLFi_check(line):
     return check
 
 def OTHER_check(line):
-    line = unquote(line['request_path']) + unquote(line['referrer'])
+    line = unquote(line['request_path'])
     line = unquote(line)
     line = line.replace('\n', '')
     line = line.replace(' ', '').lower()

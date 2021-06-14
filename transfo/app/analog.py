@@ -12,9 +12,9 @@ class Database:
         if 'analog' not in r.db_list().run():
             r.db_create('analog').run()
             r.db('analog').table_create('log').run()
+            r.db('analog').table_create('users').run()
         if 'test' in r.db_list().run():
             r.db_drop('test').run()
-
     def sendLog(self, log):
         if log is not None:
             r = self.r
