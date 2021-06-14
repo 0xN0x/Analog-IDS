@@ -13,7 +13,6 @@ import {
 import {
   BarChart as BarChartIcon,
   Settings as SettingsIcon,
-  Clock as ClockIcon,
   User as UserIcon,
   Database as DatabaseIcon
 } from 'react-feather';
@@ -28,14 +27,9 @@ const items = [
     title: 'Dashboard'
   },
   {
-    href: '/app/users',
+    href: '/app/logs',
     icon: DatabaseIcon,
     title: 'Live Logs'
-  },
-  {
-    href: '/app/products',
-    icon: ClockIcon,
-    title: 'Actions'
   },
   {
     href: '/app/account',
