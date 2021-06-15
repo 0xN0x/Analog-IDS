@@ -4,13 +4,13 @@
 
 ### Côté serveur
 
-> :warning: Il est requis que **docker** et **docker-compose** soit installer sur le serveur ainsi que les ports 514 et 80/443 ne soit pas utilisé par d'autres services.
+> :warning: Il est requis que **docker** et **docker-compose** soit installés sur le serveur ainsi que les ports 514 et 80/443 ne soit pas utilisés par d'autres services.
 
 - Cloner le répertoire GitHub suivant :
     ```bash
     git clone https://github.com/Nundir/AnaLog.git && cd Analog
     ```
-- Modifier les variables d'environements situé `web/Dockerfile` :
+- Modifier les variables d'environnements situés dans`web/Dockerfile` :
     ```
     ENV DOMAIN_NAME=example.com ADMIN_PASSWORD=admin ADMIN_USERNAME=admin
     ```
@@ -25,7 +25,7 @@
     ```
     > :information_source: `rsyslog` : envoi des logs de la machine cliente vers le serveur Analog.
     > 
-    > :information_source: `rsyslog-gnutls` : permet de chiffrer les logs envoyé par la machine cliente.
+    > :information_source: `rsyslog-gnutls` : permet de chiffrer les logs envoyés par la machine cliente.
     >
     > :information_source: `rsync` : outil utilisé pour le transfert de certificat de l'autorité de certification vers le client.
 
@@ -34,7 +34,7 @@
     sudo mkdir /etc/rsyslog-tls
     chown -R $USER:$USER /etc/rsyslog-tls
     ```
-- Depuis le serveur Analog créé les certificat du client à l'aide de la commande suivante :
+- Depuis le serveur Analog, créez les certificat du client à l'aide de la commande suivante :
     ```bash
     docker exec -it collector cert-client
     ```
