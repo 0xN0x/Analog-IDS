@@ -28,7 +28,7 @@ const LogsResults = ({ row }) => {
         <TableCell align="right">{row.host}</TableCell>
         <TableCell align="right">{row.date}</TableCell>
       </TableRow>
-      <TableRow>
+      <TableRow style={{ backgroundColor: '#35373C' }}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>

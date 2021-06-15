@@ -19,6 +19,8 @@ const express = require('express');
  */
 const router = express.Router();
 
+db.init();
+
 router.post('/login', (req, res) => {
   console.log(req.body);
   if (!req.body.email || !req.body.password) res.sendStatus(400);
