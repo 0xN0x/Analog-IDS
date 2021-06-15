@@ -1,11 +1,6 @@
 const bcrypt = require('bcrypt');
 const BcryptSalt = require('bcrypt-salt');
 const uuid = require('uuid');
-const r = require('rethinkdbdash')({ 
-    host: 'db',
-    port: '28015',
-    db: 'analog'
-});
 
 const bs = new BcryptSalt();
 
@@ -18,8 +13,26 @@ class Database {
         });
 
         this.io = io;
+    }
 
-        r.table('log').changes().run().then((cursor) => {
+    init() {
+        this.checkPasswordValidity(process.env.ADMIN_EMAIL, process.env.ADMIN_PASSWORD).then((val) => {
+            console.log(val);
+
+            if (val) return;
+
+            this.r.table('users').delete().run().then(() => {
+                this.insertUser(
+                    process.env.ADMIN_EMAIL, 
+                    process.env.ADMIN_PASSWORD,
+                    "Analog",
+                    "administrator",
+                    "Admin"
+                );
+            });
+        });
+
+        this.r.table('log').changes().run().then((cursor) => {
             cursor.each((err, value) => {
                 if (err) return console.log(err);
         
@@ -33,8 +46,17 @@ class Database {
      * @param {UUIDv4} id 
      * @returns {Promise}
      */
-    getUser(id) {
-        return r.table('users').filter(r.row('id').eq(id)).run();
+    getUserByID(id) {
+        return this.r.table('users').filter(this.r.row('id').eq(id)).run();
+    }
+
+    /**
+     * Get a user by is UUID
+     * @param {UUIDv4} id 
+     * @returns {Promise}
+     */
+    getUserByMail(mail) {
+        return this.r.table('users').filter(this.r.row('email').eq(mail)).run();
     }
 
     /**
@@ -43,22 +65,24 @@ class Database {
      * @param {String} password 
      * @returns 
      */
-    insertUser(mail, password) {
-        return r.table('users').insert({ 
-            id: uuid.v4(), 
-            mail,
-            password: bcrypt.hashSync(password, bs.saltRounds)
+    insertUser(mail, password, firstname, lastname, role) {
+        return this.r.table('users').insert({
+            email: mail,
+            password: bcrypt.hashSync(password, bs.saltRounds),
+            firstname: firstname,
+            lastname: lastname,
+            role: role
         }).run();
     }
 
     /**
-     * 
+     * Update the user
      * @param {UUIDv4} id 
      * @param {Object} update 
      * @returns 
      */
     updateUser(id, update) {
-        return r.table('users').filter(r.row('id').eq(id)).update(update).run();
+        return this.r.table('users').filter(this.r.row('id').eq(id)).update(update).run();
     }
 
     /**
@@ -68,9 +92,11 @@ class Database {
      * @returns {Boolean} Is the mail and password valid
      */
     checkPasswordValidity(mail, password) {
-        user = r.table('users').filter(r.row('mail').eq(mail)).run();
+        return this.getUserByMail(mail).then((user) => {
+            if (user.length == 0) return false;
 
-        return bcrypt.compareSync(password, user.password);
+            return bcrypt.compareSync(password, user[0].password);
+        });
     };
 }
 
@@ -78,10 +104,4 @@ class Database {
 
 module.exports = {
     Database,
-    init,
-    insertUserCustom,
-    insertUser,
-    updateUserOneValue,
-    updateUser,
-    checkPasswordValidity,
 };

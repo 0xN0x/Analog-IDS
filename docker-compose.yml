@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 services: 
   collector:
     build: ./collector
@@ -21,21 +21,21 @@ services:
     build: ./db
     container_name: db
     restart: always
+    ports:
+      - 38080:8080
   web:
     build: ./web
     container_name: web
     depends_on: 
       - transfo
+      - db
+      
     command: npm start
     volumes: 
       - ./web/:/web
       - data:/var/log/
     ports:
       - 80:3000
-    environment:
-      - ADMIN_EMAIL=admin@example.com
-      - ADMIN_PASSWORD=admin
-      - DOMAIN_NAME=example.com
 
 volumes: 
   data:

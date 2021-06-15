@@ -11,7 +11,7 @@ const Database = require('./lib/db').Database;
 
 const api = require('./routers/api');
 
-const db = new Database('db', '28015', 'analog');
+global.db = new Database('db', '28015', 'analog', io);
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -26,17 +26,6 @@ app.get('*.map', (req, res) => {
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'app', 'build', 'index.html'));
-});
-
-/**
- * Database changes feed
- */
-db.r.table('log').changes().run().then((cursor) => {
-    cursor.each((err, value) => {
-        if (err) return console.log(err);
-
-        io.emit("log", value.new_val);
-    });
 });
 
 /**
@@ -55,4 +44,8 @@ io.on('connection', (socket) => {
 
 server.listen(3000, () => {
     console.log(`Server running`);
+
+    setTimeout(() => {
+        global.db.init();
+    }, 5000)
 });

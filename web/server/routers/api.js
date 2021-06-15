@@ -1,5 +1,3 @@
-const db = require('../lib/db.js')
-
 /** Routes de l'API
  * @module routers/api
  * @namespace ApiRoutes
@@ -7,43 +5,36 @@ const db = require('../lib/db.js')
  */
 
 /**
- * Module Express
- * @const
- */
-const express = require('express');
-
-/**
  * Router Express
  * @type {object}
  * @const
  */
-const router = express.Router();
-
-db.init();
+const router = require('express').Router();;
 
 router.post('/login', (req, res) => {
-  console.log(req.body);
   if (!req.body.email || !req.body.password) res.sendStatus(400);
 
-  if (req.body.email == "admin@admin.fr" && req.body.password == "admin") {
+  global.db.checkPasswordValidity(req.body.email, req.body.password).then((val) => {
+    console.log(val);
+
+    if (!val) {
       res.status(200).send({
+        message: "Invalid email or password"
+      });
+    } else {
+      global.db.getUserByMail(req.body.email).then((user) => {
+        res.status(200).send({
           message: "OK",
           data: {
-              avatar: '/static/images/avatars/avatar.png',
-              jobTitle: 'BSI',
-              firstname: 'Mickael',
-              lastname: 'Courtiade',
-              email: req.body.email,
-              city: 'Rennes',
-              country: 'FR',
-              timezone: 'GMT+2'
+            email: user[0].mail,
+            firstname: user[0].firstname,
+            lastname: user[0].lastname,
+            role: user[0].role
           }
+        });
       });
-  } else {
-      res.status(200).send({
-          message: "Invalid email or password"
-      })
-  }
+    }
+  });
 });
 
 router.get('/logs/stats', (req, res) => {

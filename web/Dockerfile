@@ -1,6 +1,8 @@
 FROM node:latest
 
-ENV DOMAIN_NAME=example.com ADMIN_PASSWORD=admin ADMIN_USERNAME=admin
+ENV DOMAIN_NAME=example.com
+ENV ADMIN_PASSWORD=admin
+ENV ADMIN_EMAIL=admin@example.com
 
 RUN mkdir -p /usr/web
 

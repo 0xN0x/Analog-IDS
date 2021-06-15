@@ -88,7 +88,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           color="textSecondary"
           variant="body2"
         >
-          {user.jobTitle}
+          {user.role}
         </Typography>
       </Box>
       <Divider />

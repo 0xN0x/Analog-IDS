@@ -38,13 +38,7 @@ const AccountProfile = (props) => (
           color="textSecondary"
           variant="body1"
         >
-          {`${user.city} ${user.country}`}
-        </Typography>
-        <Typography
-          color="textSecondary"
-          variant="body1"
-        >
-          {`${moment().format('hh:mm A')} ${user.timezone}`}
+          {`${moment().format('dd/mm/yyyy hh:mm A')}`}
         </Typography>
       </Box>
     </CardContent>
