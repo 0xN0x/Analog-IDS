@@ -10,9 +10,9 @@
     ```bash
     git clone https://github.com/Nundir/AnaLog.git && cd Analog
     ```
-- Modifier les variables d'environnements situés dans`web/Dockerfile` :
+- Modifier les variables d'environnements situés dans`web/Dockerfile` pour permettre la sécurisation https et créer le compte admin de l'interface web:
     ```
-    ENV DOMAIN_NAME=example.com ADMIN_PASSWORD=admin ADMIN_USERNAME=admin
+    ENV DOMAIN_NAME=example.com ADMIN_PASSWORD=admin ENV ADMIN_EMAIL=exemple@exemple.fr
     ```
 - Construire et démarrer le serveur AnaLog :
     ```bash
