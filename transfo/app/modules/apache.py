@@ -11,11 +11,11 @@ OTHER_L = ['wso.php','phpshell.php','shell_uploader.php','mysql.php','r57.php','
 
 def main(line):
     line = re.search(r'(?P<ip>[(\d\.)]+) - - \[(?P<date>.*?) (.*?)] "(?P<method>\w+) (?P<request_path>.*?) HTTP\/(?P<http_version>.*?)" (?P<status_code>\d+) (?P<response_size>\d+) "(?P<referrer>.*?)" "(?P<user_agent>.*?)"',line).groupdict()
-    line = analyse(line)
-    return [line]
-
-def analyse(line):
     tag = []
+    tag = analyse(line, tag)
+    return [line], tag
+
+def analyse(line, tag):
     if XSS_check(line) is True:
         tag.append('Cross Site Scripting')
     if SQLi_check(line) is True:
@@ -28,8 +28,7 @@ def analyse(line):
         tag.append('CRLF Injection')
     if OTHER_check(line) is True:
         tag.append('Evil request')
-    line['tag'] = tag
-    return line
+    return tag
 
 def XSS_check(line):
     line = unquote(line['request_path'])

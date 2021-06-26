@@ -29,11 +29,9 @@ services:
     depends_on: 
       - transfo
       - db
-      
     command: npm start
     volumes: 
       - ./web/:/web
-      - data:/var/log/
     ports:
       - 80:3000
 

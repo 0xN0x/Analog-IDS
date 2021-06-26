@@ -26,7 +26,7 @@ class Log:
     def __init__(self, line):
         self.line = line
         try:
-            self.date, self.host, self.app, self.line = self.logParser()
+            self.date, self.host, self.app, self.line, self.tag = self.logParser()
         except:
             pass
 
@@ -37,14 +37,14 @@ class Log:
             app = re.search(r'^(\w+)', line[2]).group().lower()
             line = ' '.join(line[3:])
             app_module = __import__("modules.%s" % app, fromlist=["modules"])
-            line = app_module.main(line)
+            line, tag = app_module.main(line)
             print(line)
-            return date, host, app, line
+            return date, host, app, line, tag
         except:
             pass
     
     def result(self):
         try:
-            return {"date": self.date, "host": self.host, "app": self.app, "data": self.line}
+            return {"date": self.date, "host": self.host, "app": self.app, "data": self.line, "tag": self.tag}
         except:
             pass
