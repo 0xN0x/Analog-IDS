@@ -1,4 +1,4 @@
-import re
+import re, time, datetime
 from rethinkdb import RethinkDB
 
 class Database:
@@ -32,7 +32,8 @@ class Log:
 
     def logParser(self):
         line = self.line.split(' ')
-        date, host = line[0], line[1]
+        date = int(datetime.datetime.strptime(line[0], "%d/%b/%Y:%H:%M:%S").timestamp())
+        host = line[1]
         try:
             app = re.search(r'^(\w+)', line[2]).group().lower()
             line = ' '.join(line[3:])
