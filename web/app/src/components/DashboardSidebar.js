@@ -17,8 +17,6 @@ import {
 } from 'react-feather';
 import NavItem from './NavItem';
 
-const user = JSON.parse(localStorage.getItem('user'));
-
 const items = [
   {
     href: '/app/dashboard',
@@ -44,6 +42,8 @@ const items = [
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
+
+  const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
     if (openMobile && onMobileClose) {

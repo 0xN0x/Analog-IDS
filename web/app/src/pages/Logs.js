@@ -24,9 +24,7 @@ const CustomerList = () => {
 
   useEffect(() => {
     socket.on('log', (message) => {
-      setData((prevData) => {
-        return [message, ...prevData];
-      });
+      setData((prevData) => [message, ...prevData]);
     });
   }, []);
 
