@@ -98,6 +98,24 @@ class Database {
             return bcrypt.compareSync(password, user[0].password);
         });
     };
+
+    /**
+     * 
+     */
+    getServices() {
+        return this.r.db('analog').table('log')('app').distinct().run()
+    };
+
+    getLogs(before, after, app) {
+        if (!before) before = "" + Math.floor(Date.now() / 1000);
+        if (!after) after = "0";
+
+        return this.r.db('analog').table('log').filter(
+            this.r.row('date').lt(before).and(
+                this.r.row('date').gt(after)
+            )
+        )
+    }
 }
 
 

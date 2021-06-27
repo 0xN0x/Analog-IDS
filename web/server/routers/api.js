@@ -37,6 +37,26 @@ router.post('/login', (req, res) => {
   });
 });
 
+router.get('/logs', (req, res) => {
+  global.db.getLogs(req.query.before, req.query.after).then((val) => {
+    let allowed_services = req.query.services ? req.query.services.split(',') : undefined;
+    let returned = [];
+
+    if (allowed_services) {
+      for (row of val) {
+        if (allowed_services.indexOf(row.app) > -1) {
+          returned.push(row)
+          continue;
+        }
+      }
+    } else {
+      returned = val;
+    }
+
+    res.status(200).send(returned);
+  });
+});
+
 router.get('/logs/stats', (req, res) => {
   res.status(200).send({
       "by_services": [
@@ -71,6 +91,12 @@ router.get('/logs/stats', (req, res) => {
               color: colors.orange[600]
           }
       ]
+  });
+});
+
+router.get('/logs/services', (req, res) => {
+  global.db.getServices().then((val) => {
+    res.status(200).send(val);
   });
 });
 

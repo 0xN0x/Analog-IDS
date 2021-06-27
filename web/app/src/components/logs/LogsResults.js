@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Box,
+  Chip,
   Collapse,
   IconButton,
   Table,
@@ -26,7 +27,12 @@ const LogsResults = ({ row }) => {
         </TableCell>
         <TableCell align="right">{row.app}</TableCell>
         <TableCell align="right">{row.host}</TableCell>
-        <TableCell align="right">{row.date}</TableCell>
+        <TableCell align="right">{new Date(row.date * 1000).toLocaleString('fr-FR')}</TableCell>
+        <TableCell align="right">
+          {row.tag.map((tag) => (
+            <Chip label={tag} />
+          ))}
+        </TableCell>
       </TableRow>
       <TableRow style={{ backgroundColor: '#35373C' }}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -59,6 +65,7 @@ LogsResults.propTypes = {
     date: PropTypes.string.isRequired,
     host: PropTypes.string.isRequired,
     data: PropTypes.object.isRequired,
+    tag: PropTypes.array.isRequired
   }).isRequired,
 };
 

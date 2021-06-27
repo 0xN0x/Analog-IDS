@@ -15,7 +15,8 @@ const theme = createMuiTheme({
     text: {
       primary: '#FFFFFF',
       secondary: '#99AAB5',
-      error: '#F44336'
+      error: '#F44336',
+      action: '#99AAB5'
     }
   },
   zIndex: {
@@ -25,7 +26,14 @@ const theme = createMuiTheme({
     appBar: 1249,
   },
   shadows,
-  typography
+  typography,
+  overrides: {
+    MuiSvgIcon: {
+      root: {
+        color: '#99AAB5'
+      }
+    }
+  }
 });
 
 export default theme;
