@@ -66,7 +66,7 @@ const LogsToolbar = (props) => {
             <FormControl sx={{ m: 1, width: 300 }}>
               <DateTimePicker
                 clearable
-                label="After"
+                label="From"
                 value={AfterValue}
                 onChange={afterChanged}
                 renderInput={(params) => <TextField {...params} />}
@@ -76,7 +76,7 @@ const LogsToolbar = (props) => {
             <FormControl sx={{ m: 1, width: 300 }}>
               <DateTimePicker
                 clearable
-                label="Before"
+                label="To"
                 value={BeforeValue}
                 onChange={beforeChanged}
                 renderInput={(params) => <TextField {...params} />}

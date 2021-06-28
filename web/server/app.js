@@ -1,14 +1,18 @@
 
-const express = require('express')
-const bodyParser = require('body-parser')
-const http = require('http')
-const path = require('path')
+const express = require('express');
+const bodyParser = require('body-parser');
+const path = require('path');
+const fs = require('fs');
 
-const app = express()
-const server = http.createServer(app)
-const io = require('socket.io')(server)
+const https = require('https')
+var privateKey  = fs.readFileSync('/opt/cert/analog-server.key', 'utf8');
+var certificate = fs.readFileSync('/opt/cert/analog-server.crt', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
+
+const app = express();
+const server = https.createServer(credentials, app);
+const io = require('socket.io')(server);
 const Database = require('./lib/db').Database;
-
 const api = require('./routers/api');
 
 global.db = new Database('db', '28015', 'analog', io);

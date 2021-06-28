@@ -15,7 +15,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import TabletIcon from '@material-ui/icons/Tablet';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
-const TrafficByDevice = (props) => {
+const LogsByService = (props) => {
   const theme = useTheme();
 
   const data = {
@@ -147,4 +147,4 @@ const TrafficByDevice = (props) => {
   );
 };
 
-export default TrafficByDevice;
+export default LogsByService;
