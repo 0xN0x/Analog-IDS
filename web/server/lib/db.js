@@ -114,11 +114,30 @@ class Database {
             this.r.row('date').lt(before).and(
                 this.r.row('date').gt(after)
             )
-        )
+        ).orderBy(this.r.desc('date'));
+    }
+
+    getLogsByDays() {
+        const hour_step = 86400;
+        const today = `${new Date().setHours(0, 0, 0, 0)}`;
+        
+        return this.r.db('analog').table('log').filter(
+            this.r.row('date').gt(`${today.slice(0, -3) - (hour_step * 14)}`)
+        ).orderBy(this.r.desc('date')).run().then((res) => {
+            let timestamps = [];
+            let days = [];
+            let i = 0;
+
+            for (let row of res) {
+                timestamps.push(row.date);
+            }
+
+            for (let i = 0; i < 14; i++) {
+                
+            }
+        });
     }
 }
-
-
 
 module.exports = {
     Database,

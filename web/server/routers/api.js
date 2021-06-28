@@ -62,34 +62,27 @@ router.get('/logs/stats', (req, res) => {
       "by_services": [
           {
               title: 'Apache2',
-              value: 50,
-              icon: LaptopMacIcon,
-              color: colors.indigo[500]
+              value: 50
           },
           {
               title: 'SSH',
-              value: 10,
-              icon: TabletIcon,
-              color: colors.red[600]
+              value: 10
           },
           {
               title: 'CRON',
-              value: 15,
-              icon: PhoneIcon,
-              color: colors.orange[600]
+              value: 15
           },
           {
               title: 'Rsyslogd',
-              value: 15,
-              icon: PhoneIcon,
-              color: colors.orange[600]
+              value: 15
           },
           {
               title: 'Sytemctl',
-              value: 10,
-              icon: PhoneIcon,
-              color: colors.orange[600]
+              value: 10
           }
+      ],
+      "by_days": [
+
       ]
   });
 });
@@ -98,6 +91,8 @@ router.get('/logs/services', (req, res) => {
   global.db.getServices().then((val) => {
     res.status(200).send(val);
   });
+
+  global.db.getLogsByDays().then((val) => {});
 });
 
 
