@@ -17,8 +17,6 @@ class Database {
 
     init() {
         this.checkPasswordValidity(process.env.ADMIN_EMAIL, process.env.ADMIN_PASSWORD).then((val) => {
-            console.log(val);
-
             if (val) return;
 
             this.r.table('users').delete().run().then(() => {
@@ -118,12 +116,11 @@ class Database {
     }
 
     getLogsByDays() {
-        const day_step = 2073600;
-        const hour_step = 86400;
+        const day_step = 86400;
         const today = `${new Date().setHours(0, 0, 0, 0)}`.slice(0, -3);
         
         return this.r.db('analog').table('log').filter(
-            this.r.row('date').gt(`${today - (hour_step * 14)}`)
+            this.r.row('date').gt(`${today - (day_step * 14)}`)
         ).orderBy(this.r.desc('date')).run().then((res) => {
             let timestamps = [];
             let days = [];
@@ -134,19 +131,16 @@ class Database {
 
             for (let i = 0; i < 14; i++) {
                 days[i] = 0;
-                
+
                 for (let j = 0; j < timestamps.length; j++) {
-                    console.log(timestamps[j] + " | " + (today + (day_step * i)));
                     if (timestamps[j] > (today - (day_step * i))) {
                         days[i] += 1;
-                        timestamps.splice(j, 1);
                     } else {
+                        timestamps = timestamps.slice(j);
                         break;
                     }
                 }
             }
-
-            console.log(days);
 
             return days;
         });

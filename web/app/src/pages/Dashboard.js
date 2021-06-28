@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import {
+  Backdrop,
   Box,
+  CircularProgress,
   Container,
   Grid
 } from '@material-ui/core';
+import axios from 'axios';
 import Budget from 'src/components/dashboard//Budget';
 import LogsByDays from 'src/components/dashboard/LogsByDays';
 import TasksProgress from 'src/components/dashboard//TasksProgress';
@@ -13,7 +16,28 @@ import TotalProfit from 'src/components/dashboard//TotalProfit';
 import LogsByService from 'src/components/dashboard/LogsByService';
 
 const Dashboard = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [servicesStats, setServicesStats] = useState([]);
+
+  useEffect(() => {
+    axios.get('/api/logs/stats').then((res) => {
+      setServicesStats(res.data.by_days);
+      setIsLoading(false);
+    });
+  }, []);
+
+  if (isLoading) {
+    return (
+      <>
+        <Helmet>
+          <title>Dashboard | Analog</title>
+        </Helmet>
+        <Backdrop open style={{ zIndex: 1252 }}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      </>
+    );
+  }
 
   return (
     <>
@@ -87,7 +111,6 @@ const Dashboard = () => {
               <LogsByService
                 sx={{ height: '100%' }}
                 servicesStats={servicesStats}
-                setServicesStats={setServicesStats}
               />
             </Grid>
           </Grid>

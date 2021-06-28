@@ -1,4 +1,5 @@
 import { Bar } from 'react-chartjs-2';
+import PropTypes from 'prop-types';
 import {
   Box,
   Button,
@@ -12,19 +13,25 @@ import {
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
-const Sales = (props) => {
+const LogsByDays = (props) => {
   const theme = useTheme();
+
+  const {
+    servicesStats
+  } = props;
+
+  console.log(props);
 
   const data = {
     datasets: [
       {
         backgroundColor: colors.indigo[500],
-        data: [18, 5, 19, 27, 29, 19, 253],
+        data: servicesStats.length === 0 ? [0, 0, 0, 0, 0, 0, 0] : servicesStats.slice(7),
         label: 'Last 7 days'
       },
       {
         backgroundColor: colors.grey[200],
-        data: [0, 0, 0, 0, 0, 0, 34],
+        data: servicesStats.length === 0 ? [0, 0, 0, 0, 0, 0, 0] : servicesStats.slice(-7),
         label: 'Previous week'
       }
     ],
@@ -135,4 +142,9 @@ const Sales = (props) => {
   );
 };
 
-export default Sales;
+LogsByDays.propTypes = {
+  servicesStats: PropTypes.array,
+  setServicesStats: PropTypes.func,
+};
+
+export default LogsByDays;
