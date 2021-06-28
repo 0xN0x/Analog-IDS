@@ -32,14 +32,13 @@ class Log:
 
     def logParser(self):
         line = self.line.split(' ')
-        date = int(datetime.datetime.strptime(line[0], "%d/%b/%Y:%H:%M:%S").timestamp())
+        date = str(datetime.datetime.strptime(line[0][:-6], "%Y-%m-%dT%H:%M:%S").timestamp())
         host = line[1]
         try:
             app = re.search(r'^(\w+)', line[2]).group().lower()
             line = ' '.join(line[3:])
             app_module = __import__("modules.%s" % app, fromlist=["modules"])
             line, tag = app_module.main(line)
-            print(line)
             return date, host, app, line, tag
         except:
             pass
