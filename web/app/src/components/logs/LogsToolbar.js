@@ -4,13 +4,15 @@ import {
   Box,
   Card,
   CardContent,
+  Checkbox,
   TextField,
   Select,
   OutlinedInput,
   MenuItem,
-  Checkbox,
+  Switch,
   ListItemText,
   FormControl,
+  FormControlLabel,
   InputLabel
 } from '@material-ui/core';
 import DateTimePicker from '@material-ui/lab/DateTimePicker';
@@ -34,8 +36,11 @@ const LogsToolbar = (props) => {
     BeforeValue,
     setBeforeValue,
     services,
-    setServices
+    setServices,
+    flagedOnly,
+    setFlagedOnly
   } = props;
+
   const [serviceListIsUpdated, setserviceListIsUpdated] = useState(false);
   const [servicesList, setServicesList] = useState([]);
 
@@ -49,6 +54,10 @@ const LogsToolbar = (props) => {
 
   const servicesChanged = async (event) => {
     setServices(event.target.value);
+  };
+
+  const flaggedChanged = async (event) => {
+    setFlagedOnly(event.target.checked);
   };
 
   if (!serviceListIsUpdated) {
@@ -103,6 +112,20 @@ const LogsToolbar = (props) => {
                 ))}
               </Select>
             </FormControl>
+
+            <FormControl
+              style={{
+                paddingTop: '15px',
+                paddingLeft: '20px',
+              }}
+            >
+              <FormControlLabel
+                control={
+                  <Switch checked={flagedOnly} onChange={flaggedChanged} name="Flagged Only" />
+                }
+                label="Flagged Only"
+              />
+            </FormControl>
           </CardContent>
         </Card>
       </Box>
@@ -117,6 +140,8 @@ LogsToolbar.propTypes = {
   setBeforeValue: PropTypes.func,
   services: PropTypes.number,
   setServices: PropTypes.func,
+  flagedOnly: PropTypes.bool,
+  setFlagedOnly: PropTypes.func,
 };
 
 export default LogsToolbar;

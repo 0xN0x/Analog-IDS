@@ -20,11 +20,13 @@ const AccountProfile = (props) => (
         }}
       >
         <Avatar
-          src={`https://ui-avatars.com/api/?name=${user.firstname}-${user.lastname}&size=100`}
+          src={user.avatar}
           sx={{
-            height: 100,
-            width: 100
+            cursor: 'pointer',
+            width: 100,
+            height: 100
           }}
+          mb={2}
         />
         <br />
         <Typography

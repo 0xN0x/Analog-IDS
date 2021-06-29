@@ -75,6 +75,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             width: 64,
             height: 64
           }}
+          pb={2}
           to="/app/account"
         />
         <Typography

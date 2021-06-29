@@ -21,6 +21,7 @@ const CustomerList = () => {
   const [AfterValue, setAfterValue] = useState(null);
   const [BeforeValue, setBeforeValue] = useState(null);
   const [services, setServices] = useState([]);
+  const [flagedOnly, setFlagedOnly] = useState(false);
 
   useEffect(() => {
     socket.on('log', (message) => {
@@ -33,12 +34,13 @@ const CustomerList = () => {
       params: {
         after: AfterValue ? Math.floor(AfterValue / 1000) : undefined,
         before: BeforeValue ? Math.floor(BeforeValue / 1000) : undefined,
-        services: services.join(',')
+        services: services.join(','),
+        flagged: flagedOnly ? '1' : '0'
       }
     }).then((res) => {
       setData(res.data);
     });
-  }, [AfterValue, BeforeValue, services]);
+  }, [AfterValue, BeforeValue, services, flagedOnly]);
 
   return (
     <>
@@ -60,6 +62,8 @@ const CustomerList = () => {
             setBeforeValue={setBeforeValue}
             services={services}
             setServices={setServices}
+            flagedOnly={flagedOnly}
+            setFlagedOnly={setFlagedOnly}
           />
           <TableContainer component={Paper}>
             <Table aria-label="collapsible table">

@@ -1,5 +1,5 @@
-import { Bar } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
+import { Bar } from 'react-chartjs-2';
 import {
   Box,
   Button,
@@ -20,23 +20,21 @@ const LogsByDays = (props) => {
     servicesStats
   } = props;
 
-  console.log(props);
-
-  const data = {
+  const data = () => ({
     datasets: [
       {
         backgroundColor: colors.indigo[500],
-        data: servicesStats.length === 0 ? [0, 0, 0, 0, 0, 0, 0] : servicesStats.slice(7),
-        label: 'Last 7 days'
+        data: servicesStats[0].reverse(),
+        label: 'Logs last 7 days'
       },
       {
         backgroundColor: colors.grey[200],
-        data: servicesStats.length === 0 ? [0, 0, 0, 0, 0, 0, 0] : servicesStats.slice(-7),
-        label: 'Previous week'
+        data: servicesStats[1].reverse(),
+        label: 'Flags last 7 days'
       }
     ],
-    labels: ['3 May', '4 May', '5 May', '6 May', '7 May', '8 May', '9 May']
-  };
+    labels: ['6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today']
+  });
 
   const options = {
     animation: false,

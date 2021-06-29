@@ -5,14 +5,12 @@ import {
   Box,
   CircularProgress,
   Container,
-  Grid
+  Grid,
+  Typography
 } from '@material-ui/core';
 import axios from 'axios';
-import Budget from 'src/components/dashboard//Budget';
+import StatBox from 'src/components/dashboard/StatBox';
 import LogsByDays from 'src/components/dashboard/LogsByDays';
-import TasksProgress from 'src/components/dashboard//TasksProgress';
-import TotalCustomers from 'src/components/dashboard//TotalCustomers';
-import TotalProfit from 'src/components/dashboard//TotalProfit';
 import LogsByService from 'src/components/dashboard/LogsByService';
 
 const Dashboard = () => {
@@ -56,42 +54,42 @@ const Dashboard = () => {
             container
             spacing={3}
           >
-            <Grid
-              item
-              lg={3}
-              sm={6}
-              xl={3}
-              xs={12}
-            >
-              <Budget />
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <StatBox
+                label="Logs today"
+                value="15"
+                comparisonLabel="Compared to yesterday"
+                comparisonValue="12"
+              />
             </Grid>
-            <Grid
-              item
-              lg={3}
-              sm={6}
-              xl={3}
-              xs={12}
-            >
-              <TotalCustomers />
+
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <StatBox
+                label="Logs flagged today"
+                value="3"
+                comparisonLabel="Compared to yesterday"
+                comparisonValue="12"
+              />
             </Grid>
-            <Grid
-              item
-              lg={3}
-              sm={6}
-              xl={3}
-              xs={12}
-            >
-              <TotalProfit sx={{ height: '100%' }} />
+
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <StatBox
+                label="Logs flagged this week"
+                value="89"
+                comparisonLabel="Compared to last week"
+                comparisonValue="12"
+              />
             </Grid>
-            <Grid
-              item
-              lg={3}
-              sm={6}
-              xl={3}
-              xs={12}
-            >
-              <TasksProgress />
+
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <StatBox
+                label="Logs flagged this week"
+                value="34"
+                comparisonLabel="Compared to last week"
+                comparisonValue="12"
+              />
             </Grid>
+
             <Grid
               item
               lg={8}
@@ -99,7 +97,9 @@ const Dashboard = () => {
               xl={9}
               xs={12}
             >
-              <LogsByDays />
+              <LogsByDays
+                servicesStats={servicesStats}
+              />
             </Grid>
             <Grid
               item
@@ -110,7 +110,72 @@ const Dashboard = () => {
             >
               <LogsByService
                 sx={{ height: '100%' }}
-                servicesStats={servicesStats}
+              />
+            </Grid>
+
+            <Grid item lg={12} sm={12} xl={12} xs={12}>
+              <Typography style={{ color: '#FFFFFF' }}>
+                Web Services
+              </Typography>
+            </Grid>
+
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <StatBox
+                label="Logs flagged this week"
+                value="89"
+                comparisonLabel="Compared to last week"
+                comparisonValue="12"
+              />
+            </Grid>
+
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <StatBox
+                label="Logs flagged this week"
+                value="89"
+                comparisonLabel="Compared to last week"
+                comparisonValue="12"
+              />
+            </Grid>
+
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <StatBox
+                label="Logs flagged this week"
+                value="89"
+                comparisonLabel="Compared to last week"
+                comparisonValue="12"
+              />
+            </Grid>
+
+            <Grid item lg={12} sm={12} xl={12} xs={12}>
+              <Typography style={{ color: '#FFFFFF' }}>
+                SSH
+              </Typography>
+            </Grid>
+
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <StatBox
+                label="Logs flagged this week"
+                value="89"
+                comparisonLabel="Compared to last week"
+                comparisonValue="12"
+              />
+            </Grid>
+
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <StatBox
+                label="Logs flagged this week"
+                value="89"
+                comparisonLabel="Compared to last week"
+                comparisonValue="12"
+              />
+            </Grid>
+
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <StatBox
+                label="Logs flagged this week"
+                value="89"
+                comparisonLabel="Compared to last week"
+                comparisonValue="12"
               />
             </Grid>
           </Grid>

@@ -104,15 +104,25 @@ class Database {
         return this.r.db('analog').table('log')('app').distinct().run()
     };
 
-    getLogs(before, after, app) {
+    getLogs(before, after, flagged) {
         if (!before) before = "" + Math.floor(Date.now() / 1000);
         if (!after) after = "0";
 
-        return this.r.db('analog').table('log').filter(
-            this.r.row('date').lt(before).and(
-                this.r.row('date').gt(after)
-            )
-        ).orderBy(this.r.desc('date'));
+        if (flagged === '1') {
+            return this.r.db('analog').table('log').filter(
+                this.r.row('date').lt(before).and(
+                    this.r.row('date').gt(after)
+                ).and(
+                    this.r.row('tag').count().gt(0)
+                )
+            ).orderBy(this.r.desc('date'));
+        } else {
+            return this.r.db('analog').table('log').filter(
+                this.r.row('date').lt(before).and(
+                    this.r.row('date').gt(after)
+                )
+            ).orderBy(this.r.desc('date'));
+        }
     }
 
     getLogsByDays() {
@@ -120,29 +130,37 @@ class Database {
         const today = `${new Date().setHours(0, 0, 0, 0)}`.slice(0, -3);
         
         return this.r.db('analog').table('log').filter(
-            this.r.row('date').gt(`${today - (day_step * 14)}`)
+            this.r.row('date').gt(`${today - (day_step * 7)}`)
         ).orderBy(this.r.desc('date')).run().then((res) => {
             let timestamps = [];
             let days = [];
+            let flags = [];
 
             for (let row of res) {
-                timestamps.push(row.date);
+                timestamps.push(row);
             }
 
-            for (let i = 0; i < 14; i++) {
+            for (let i = 0; i < 7; i++) {
                 days[i] = 0;
+                flags[i] = 0;
 
                 for (let j = 0; j < timestamps.length; j++) {
-                    if (timestamps[j] > (today - (day_step * i))) {
+                    if (timestamps[j].date > (today - (day_step * i))) {
                         days[i] += 1;
+
+                        if (timestamps[j].tag.length > 0) {
+                            flags[i] += 1;
+                        }
                     } else {
-                        timestamps = timestamps.slice(j);
+                        timestamps = timestamps.slice(days[i]);
                         break;
                     }
                 }
+
+                if (days[i] === 1) timestamps = timestamps.slice(1);                
             }
 
-            return days;
+            return [days, flags];
         });
     }
 }

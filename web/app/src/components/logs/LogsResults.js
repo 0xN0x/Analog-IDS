@@ -25,12 +25,12 @@ const LogsResults = ({ row }) => {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell align="right">{row.app}</TableCell>
-        <TableCell align="right">{row.host}</TableCell>
-        <TableCell align="right">{new Date(row.date * 1000).toLocaleString('fr-FR')}</TableCell>
-        <TableCell align="right">
+        <TableCell align="center">{row.app}</TableCell>
+        <TableCell align="center">{row.host}</TableCell>
+        <TableCell align="center">{new Date(row.date * 1000).toLocaleString('fr-FR')}</TableCell>
+        <TableCell align="center">
           {row.tag.map((tag) => (
-            <Chip label={tag} />
+            <Chip color="error" label={tag} />
           ))}
         </TableCell>
       </TableRow>

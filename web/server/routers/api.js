@@ -38,7 +38,7 @@ router.post('/login', (req, res) => {
 });
 
 router.get('/logs', (req, res) => {
-  global.db.getLogs(req.query.before, req.query.after).then((val) => {
+  global.db.getLogs(req.query.before, req.query.after, req.query.flagged).then((val) => {
     let allowed_services = req.query.services ? req.query.services.split(',') : undefined;
     let returned = [];
 
@@ -58,33 +58,7 @@ router.get('/logs', (req, res) => {
 });
 
 router.get('/logs/stats', (req, res) => {
-  global.db.getLogsByDays().then((val) => {
-    console.log({
-      "by_services": [
-          {
-              title: 'Apache2',
-              value: 50
-          },
-          {
-              title: 'SSH',
-              value: 10
-          },
-          {
-              title: 'CRON',
-              value: 15
-          },
-          {
-              title: 'Rsyslogd',
-              value: 15
-          },
-          {
-              title: 'Sytemctl',
-              value: 10
-          }
-      ],
-      "by_days": val
-    });
-
+  global.db.getLogsByDays().then((logs_by_days) => {
     res.status(200).send({
       "by_services": [
           {
@@ -108,7 +82,7 @@ router.get('/logs/stats', (req, res) => {
               value: 10
           }
       ],
-      "by_days": val
+      "by_days": logs_by_days
     });
   });
 });
