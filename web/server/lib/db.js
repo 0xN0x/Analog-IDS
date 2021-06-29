@@ -157,10 +157,54 @@ class Database {
                     }
                 }
 
-                if (days[i] === 1) timestamps = timestamps.slice(1);                
+                if (days[i] === 1) timestamps = timestamps.slice(1);
+                if (days[i] === timestamps.length) timestamps = timestamps.slice(timestamps.length);               
             }
 
             return [days, flags];
+        });
+    }
+
+    getSSHLogs() {
+
+    }
+
+    getWebLogs() {
+        return this.r.db('analog').table('log').filter(
+            this.r.row('app').eq('apache').or(
+                this.r.row('app').eq('nginx')
+            )
+        );
+    }
+
+    getLogsByService() {
+        const today = `${new Date().setHours(0, 0, 0, 0)}`.slice(0, -3);
+
+        return this.r.db('analog').table('log').filter(
+            this.r.row('date').gt(`${today}`)
+        ).group('app').count().then((res) => {
+            let labels = [];
+            let percentages = [];
+            let total = 0;
+            
+            res = res.sort((a, b) => {
+                return a.reduction > b.reduction ? 1 : -1;
+            }).slice(0, 5).reverse();
+
+            for (let i = 0; i < 5; i++) {
+                if (res[i]) {
+                    total += res[i].reduction
+                }
+            }
+
+            for (let i = 0; i < 5; i++) {
+                if (res[i]) {
+                    labels.push(res[i].group);
+                    percentages.push(Math.trunc((res[i].reduction / total) * 100));
+                }
+            }
+
+            return [labels, percentages];
         });
     }
 }

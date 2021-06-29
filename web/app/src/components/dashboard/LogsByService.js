@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Doughnut } from 'react-chartjs-2';
 import {
   Box,
@@ -6,33 +7,36 @@ import {
   CardContent,
   CardHeader,
   Divider,
-  Typography,
   colors,
   useTheme
 } from '@material-ui/core';
-import LaptopMacIcon from '@material-ui/icons/LaptopMac';
-import PhoneIcon from '@material-ui/icons/Phone';
-import TabletIcon from '@material-ui/icons/Tablet';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 const LogsByService = (props) => {
   const theme = useTheme();
 
+  const {
+    values,
+    labels,
+  } = props;
+
   const data = {
     datasets: [
       {
-        data: [63, 15, 22],
+        data: values,
         backgroundColor: [
           colors.indigo[500],
           colors.red[600],
-          colors.orange[600]
+          colors.orange[600],
+          colors.blue[600],
+          colors.green[600]
         ],
         borderWidth: 8,
         borderColor: colors.grey[800],
         hoverBorderColor: colors.grey[800]
       }
     ],
-    labels: ['Desktop', 'Tablet', 'Mobile']
+    labels
   };
 
   const options = {
@@ -40,7 +44,8 @@ const LogsByService = (props) => {
     cutoutPercentage: 80,
     layout: { padding: 0 },
     legend: {
-      display: false
+      display: true,
+      position: 'bottom'
     },
     maintainAspectRatio: false,
     responsive: true,
@@ -56,27 +61,6 @@ const LogsByService = (props) => {
       titleFontColor: theme.palette.text.primary
     }
   };
-
-  const devices = [
-    {
-      title: 'Apache2',
-      value: 63,
-      icon: LaptopMacIcon,
-      color: colors.indigo[500]
-    },
-    {
-      title: 'SSH',
-      value: 15,
-      icon: TabletIcon,
-      color: colors.red[600]
-    },
-    {
-      title: 'CRON',
-      value: 23,
-      icon: PhoneIcon,
-      color: colors.orange[600]
-    }
-  ];
 
   return (
     <Card {...props}>
@@ -105,46 +89,14 @@ const LogsByService = (props) => {
             options={options}
           />
         </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            pt: 2
-          }}
-        >
-          {devices.map(({
-            color,
-            icon: Icon,
-            title,
-            value
-          }) => (
-            <Box
-              key={title}
-              sx={{
-                p: 1,
-                textAlign: 'center'
-              }}
-            >
-              <Icon color="white" />
-              <Typography
-                color="textPrimary"
-                variant="body1"
-              >
-                {title}
-              </Typography>
-              <Typography
-                style={{ color }}
-                variant="h2"
-              >
-                {value}
-                %
-              </Typography>
-            </Box>
-          ))}
-        </Box>
       </CardContent>
     </Card>
   );
+};
+
+LogsByService.propTypes = {
+  values: PropTypes.array,
+  labels: PropTypes.array,
 };
 
 export default LogsByService;

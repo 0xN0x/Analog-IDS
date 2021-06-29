@@ -7,6 +7,7 @@ import {
   Typography
 } from '@material-ui/core';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import { green, red } from '@material-ui/core/colors';
 
 const StatBox = (props) => {
@@ -17,8 +18,14 @@ const StatBox = (props) => {
     comparisonValue,
   } = props;
 
-  const percentage = Math.trunc(((value / comparisonValue) % 1) * 100);
-  const positive = value / comparisonValue > 1;
+  const comparisonValueFixed = (comparisonValue === 0 ? 1 : comparisonValue);
+
+  const percentage = Math.trunc(((value / comparisonValueFixed) % 1) * 100);
+  const positive = value / (comparisonValueFixed) > 1;
+
+  console.log(`value : ${value}`);
+  console.log(`comparisonValueFixed : ${comparisonValueFixed}`);
+  console.log(`Percentage  : ${percentage}`);
 
   return (
     <Card
@@ -46,30 +53,38 @@ const StatBox = (props) => {
             </Typography>
           </Grid>
         </Grid>
-        <Box
-          sx={{
-            pt: 2,
-            display: 'flex',
-            alignItems: 'center'
-          }}
-        >
-          <ArrowDownwardIcon sx={{ color: positive ? green[900] : red[900] }} />
-          <Typography
-            sx={{
-              color: positive ? green[900] : red[900],
-              mr: 1
-            }}
-            variant="body2"
-          >
-            {`${percentage}%`}
-          </Typography>
-          <Typography
-            color="textSecondary"
-            variant="caption"
-          >
-            {comparisonLabel}
-          </Typography>
-        </Box>
+        {
+          comparisonLabel && comparisonValue ? (
+            <Box
+              sx={{
+                pt: 2,
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            >
+              {positive ? (
+                <ArrowUpwardIcon sx={{ color: green[900] }} />
+              ) : (
+                <ArrowDownwardIcon sx={{ color: red[900] }} />
+              )}
+              <Typography
+                sx={{
+                  color: positive ? green[900] : red[900],
+                  mr: 1
+                }}
+                variant="body2"
+              >
+                {`${percentage}%`}
+              </Typography>
+              <Typography
+                color="textSecondary"
+                variant="caption"
+              >
+                {comparisonLabel}
+              </Typography>
+            </Box>
+          ) : ''
+        }
       </CardContent>
     </Card>
   );

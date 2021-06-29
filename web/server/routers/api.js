@@ -59,30 +59,11 @@ router.get('/logs', (req, res) => {
 
 router.get('/logs/stats', (req, res) => {
   global.db.getLogsByDays().then((logs_by_days) => {
-    res.status(200).send({
-      "by_services": [
-          {
-              title: 'Apache2',
-              value: 50
-          },
-          {
-              title: 'SSH',
-              value: 10
-          },
-          {
-              title: 'CRON',
-              value: 15
-          },
-          {
-              title: 'Rsyslogd',
-              value: 15
-          },
-          {
-              title: 'Sytemctl',
-              value: 10
-          }
-      ],
-      "by_days": logs_by_days
+    global.db.getLogsByService().then((logs_by_services) => {
+      res.status(200).send({
+        "by_services": logs_by_services,
+        "by_days": logs_by_days
+      });
     });
   });
 });

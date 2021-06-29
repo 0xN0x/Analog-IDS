@@ -16,10 +16,12 @@ import LogsByService from 'src/components/dashboard/LogsByService';
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [servicesStats, setServicesStats] = useState([]);
+  const [byService, setByService] = useState([]);
 
   useEffect(() => {
     axios.get('/api/logs/stats').then((res) => {
       setServicesStats(res.data.by_days);
+      setByService(res.data.by_services);
       setIsLoading(false);
     });
   }, []);
@@ -57,36 +59,32 @@ const Dashboard = () => {
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               <StatBox
                 label="Logs today"
-                value="15"
+                value={servicesStats[0][0]}
                 comparisonLabel="Compared to yesterday"
-                comparisonValue="12"
+                comparisonValue={servicesStats[0][1]}
               />
             </Grid>
 
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               <StatBox
                 label="Logs flagged today"
-                value="3"
+                value={servicesStats[1][0]}
                 comparisonLabel="Compared to yesterday"
-                comparisonValue="12"
+                comparisonValue={servicesStats[1][1]}
+              />
+            </Grid>
+
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <StatBox
+                label="Logs this week"
+                value={servicesStats[0].reduce((acc, cur) => acc + cur)}
               />
             </Grid>
 
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               <StatBox
                 label="Logs flagged this week"
-                value="89"
-                comparisonLabel="Compared to last week"
-                comparisonValue="12"
-              />
-            </Grid>
-
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <StatBox
-                label="Logs flagged this week"
-                value="34"
-                comparisonLabel="Compared to last week"
-                comparisonValue="12"
+                value={servicesStats[1].reduce((acc, cur) => acc + cur)}
               />
             </Grid>
 
@@ -110,6 +108,8 @@ const Dashboard = () => {
             >
               <LogsByService
                 sx={{ height: '100%' }}
+                labels={byService[0]}
+                values={byService[1]}
               />
             </Grid>
 
@@ -123,8 +123,6 @@ const Dashboard = () => {
               <StatBox
                 label="Logs flagged this week"
                 value="89"
-                comparisonLabel="Compared to last week"
-                comparisonValue="12"
               />
             </Grid>
 
@@ -132,8 +130,6 @@ const Dashboard = () => {
               <StatBox
                 label="Logs flagged this week"
                 value="89"
-                comparisonLabel="Compared to last week"
-                comparisonValue="12"
               />
             </Grid>
 
@@ -141,8 +137,6 @@ const Dashboard = () => {
               <StatBox
                 label="Logs flagged this week"
                 value="89"
-                comparisonLabel="Compared to last week"
-                comparisonValue="12"
               />
             </Grid>
 
@@ -154,28 +148,22 @@ const Dashboard = () => {
 
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               <StatBox
-                label="Logs flagged this week"
+                label="Connection success"
                 value="89"
-                comparisonLabel="Compared to last week"
-                comparisonValue="12"
               />
             </Grid>
 
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               <StatBox
-                label="Logs flagged this week"
+                label="Connection refused"
                 value="89"
-                comparisonLabel="Compared to last week"
-                comparisonValue="12"
               />
             </Grid>
 
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               <StatBox
-                label="Logs flagged this week"
+                label="Connection failed"
                 value="89"
-                comparisonLabel="Compared to last week"
-                comparisonValue="12"
               />
             </Grid>
           </Grid>
