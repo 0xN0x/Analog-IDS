@@ -184,7 +184,7 @@ class Database {
             this.r.row('date').gt(`${today}`)
         ).group('app').count().then((res) => {
             let labels = [];
-            let percentages = [];
+            let values = [];
             let total = 0;
             
             res = res.sort((a, b) => {
@@ -200,11 +200,11 @@ class Database {
             for (let i = 0; i < 5; i++) {
                 if (res[i]) {
                     labels.push(res[i].group);
-                    percentages.push(Math.trunc((res[i].reduction / total) * 100));
+                    values.push(res[i].reduction);
                 }
             }
 
-            return [labels, percentages];
+            return [labels, values];
         });
     }
 }

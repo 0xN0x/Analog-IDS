@@ -31,7 +31,7 @@ const LogsByService = (props) => {
           colors.blue[600],
           colors.green[600]
         ],
-        borderWidth: 8,
+        borderWidth: 2,
         borderColor: colors.grey[800],
         hoverBorderColor: colors.grey[800]
       }
@@ -41,8 +41,12 @@ const LogsByService = (props) => {
 
   const options = {
     animation: false,
-    cutoutPercentage: 80,
-    layout: { padding: 0 },
+    cutoutPercentage: 70,
+    layout: {
+      padding: {
+        top: 100
+      }
+    },
     legend: {
       display: true,
       position: 'bottom'
