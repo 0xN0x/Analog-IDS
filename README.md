@@ -32,7 +32,7 @@
 - Création du dossier **rsyslog-tls** qui va accueillir les certificats pour chiffrer les logs envoyés
     ```bash
     sudo mkdir /etc/rsyslog-tls
-    chown -R $USER:$USER /etc/rsyslog-tls
+    sudo chown -R $USER:$USER /etc/rsyslog-tls
     ```
 - Depuis le serveur Analog, créez les certificat du client à l'aide de la commande suivante :
     ```bash
