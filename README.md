@@ -39,7 +39,7 @@
     docker exec -it collector cert-client
     ```
     > :warning: Assurez-vous d'avoir le droit d'écriture pour envoyer les certificats depuis le serveur à l'aide de la commande `rsync`.
-- Edition du fichier `/etc/rsyslog.conf` :
+- Sur le client : édition du fichier `/etc/rsyslog.conf` :
     ```bash
     # Les modules utilisés pour le client AnaLog
     $ModLoad imuxsock
