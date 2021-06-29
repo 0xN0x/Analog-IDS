@@ -166,7 +166,23 @@ class Database {
     }
 
     getSSHLogs() {
+        const today = `${new Date().setHours(0, 0, 0, 0)}`.slice(0, -3);
 
+        return this.r.db('analog').table('log').filter(
+            this.r.row('app').eq('ssh')
+        ).filter(
+            this.r.row('date').gt(`${today}`)
+        ).group(
+            this.r.row('data')(0)('msg')
+        ).count().then((res) => {
+            let messages = {};
+
+            for (let i = 0; i < res.length; i++) {
+                messages[res[i].group] = res[i].reduction;
+            }
+
+            return messages;
+        });
     }
 
     getWebLogs() {

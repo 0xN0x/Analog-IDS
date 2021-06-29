@@ -49,7 +49,7 @@ const StatBox = (props) => {
               color="textPrimary"
               variant="h3"
             >
-              {value}
+              {!value ? 0 : value}
             </Typography>
           </Grid>
         </Grid>

@@ -60,10 +60,13 @@ router.get('/logs', (req, res) => {
 router.get('/logs/stats', (req, res) => {
   global.db.getLogsByDays().then((logs_by_days) => {
     global.db.getLogsByService().then((logs_by_services) => {
-      res.status(200).send({
-        "by_services": logs_by_services,
-        "by_days": logs_by_days
-      });
+      global.db.getSSHLogs().then((ssh_logs) => {
+        res.status(200).send({
+          "by_services": logs_by_services,
+          "by_days": logs_by_days,
+          "ssh": ssh_logs
+        });
+      })
     });
   });
 });

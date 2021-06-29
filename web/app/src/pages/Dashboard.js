@@ -17,11 +17,13 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [servicesStats, setServicesStats] = useState([]);
   const [byService, setByService] = useState([]);
+  const [sshLogs, setSshLogs] = useState({});
 
   useEffect(() => {
     axios.get('/api/logs/stats').then((res) => {
       setServicesStats(res.data.by_days);
       setByService(res.data.by_services);
+      setSshLogs(res.data.ssh);
       setIsLoading(false);
     });
   }, []);
@@ -115,33 +117,6 @@ const Dashboard = () => {
 
             <Grid item lg={12} sm={12} xl={12} xs={12}>
               <Typography style={{ color: '#FFFFFF' }}>
-                Web Services
-              </Typography>
-            </Grid>
-
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <StatBox
-                label="Logs flagged this week"
-                value="89"
-              />
-            </Grid>
-
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <StatBox
-                label="Logs flagged this week"
-                value="89"
-              />
-            </Grid>
-
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <StatBox
-                label="Logs flagged this week"
-                value="89"
-              />
-            </Grid>
-
-            <Grid item lg={12} sm={12} xl={12} xs={12}>
-              <Typography style={{ color: '#FFFFFF' }}>
                 SSH
               </Typography>
             </Grid>
@@ -149,21 +124,21 @@ const Dashboard = () => {
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               <StatBox
                 label="Connection success"
-                value="89"
+                value={sshLogs['accepted password']}
               />
             </Grid>
 
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               <StatBox
                 label="Connection refused"
-                value="89"
+                value={sshLogs['Authentication failure']}
               />
             </Grid>
 
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               <StatBox
                 label="Connection failed"
-                value="89"
+                value={sshLogs['failed password']}
               />
             </Grid>
           </Grid>
