@@ -16,9 +16,6 @@
     ```
 - Construire et démarrer le serveur AnaLog :
     ```bash
-    cd AnaLog
-    ```
-    ```bash
     docker-compose up -d --build
     ```
 ### Côté client
