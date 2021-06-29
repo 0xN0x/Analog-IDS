@@ -32,7 +32,7 @@ class Log:
 
     def logParser(self):
         line = self.line.split(' ')
-        date = str(datetime.datetime.strptime(line[0][:-6], "%Y-%m-%dT%H:%M:%S").timestamp())
+        date = str(datetime.datetime.strptime(line[0][:-6], "%Y-%m-%dT%H:%M:%S").timestamp())[:-2]
         host = line[1]
         try:
             app = re.search(r'^(\w+)', line[2]).group().lower()

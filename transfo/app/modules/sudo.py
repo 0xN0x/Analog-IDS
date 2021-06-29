@@ -1,11 +1,13 @@
 import re
 def main(line):
     data = []
+    tag = []
     if "user NOT in sudoers" in line:
         data.append(parse_not_sudoers(line))
+        tag.append('Sudo privileges failure')
     else:
         data.append(parse_basic(line))
-    return data
+    return data, tag
 
 def parse_basic(line):
     return re.search(r'^\s+(?P<user>\w+)\s?:.*TTY=(?P<tty>\w+\/\d).*.*COMMAND=(?P<command>.*)', line).groupdict()

@@ -1,12 +1,14 @@
 import re
 def main(line):
     data = []
+    tag = []
     if "Invalid user" in line:
         data.append(parse_invalid_user(line))
     elif "Accepted password for" in line:
         data.append(parse_accepted_password(line))
     elif "Failed password for" in line:
         data.append(parse_failed_password(line))
+        tag.append('Failed password')
     elif "session opened" in line:
         data.append(parse_session_opened(line))
     elif "session closed" in line:
@@ -21,7 +23,7 @@ def main(line):
         data.append(parse_connection_closed(line))
     else:
         data.append(line)
-    return data
+    return data, tag
 
 def parse_invalid_user(line):
     line = line.split('Invalid user ')
