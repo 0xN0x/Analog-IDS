@@ -10,10 +10,6 @@
     ```bash
     git clone https://github.com/Nundir/AnaLog.git && cd Analog
     ```
-- Modifier les variables d'environnements situés dans`web/Dockerfile` pour permettre la sécurisation https et créer le compte admin de l'interface web:
-    ```
-    ENV DOMAIN_NAME=example.com ADMIN_PASSWORD=admin ENV ADMIN_EMAIL=exemple@exemple.fr
-    ```
 - Construire et démarrer le serveur AnaLog :
     ```bash
     docker-compose up -d --build
@@ -75,4 +71,4 @@
     ```bash
     sudo systemctl restart rsyslog
     ```
-> :warning: **CHANGEZ VOTRE MOT DE PASSE DÈS VOTRE PREMIÈRE CONNEXION SUR ANALOG**
+> :warning: **CHANGEZ VOTRE MOT DE PASSE ET VOTRE ADRESSE EMAIL DÈS VOTRE PREMIÈRE CONNEXION SUR ANALOG**
