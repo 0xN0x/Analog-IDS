@@ -1,4 +1,10 @@
 import { Helmet } from 'react-helmet';
+import axios from 'axios';
+import {
+  Box,
+  Button,
+  Container,
+} from '@material-ui/core';
 
 const SettingsView = () => (
   <>
@@ -14,7 +20,15 @@ const SettingsView = () => (
       }}
     >
       <Container maxWidth={false}>
-
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => {
+            axios.delete('/api/logs');
+          }}
+        >
+          Clear logs
+        </Button>
       </Container>
     </Box>
   </>

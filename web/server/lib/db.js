@@ -109,6 +109,10 @@ class Database {
         return this.r.db('analog').table('log')('app').distinct().run()
     };
 
+    deleteLogs() {
+        return this.r.db('analog').table('log').delete().run();
+    }
+
     getLogs(before, after, flagged) {
         if (!before) before = "" + Math.floor(Date.now() / 1000);
         if (!after) after = "0";

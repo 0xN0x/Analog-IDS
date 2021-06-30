@@ -89,6 +89,12 @@ router.get('/logs', (req, res) => {
   });
 });
 
+router.delete('/logs', (req, res) => {
+  global.db.deleteLogs().then(() => {
+    res.status(200).send();
+  });
+});
+
 router.get('/logs/stats', (req, res) => {
   global.db.getLogsByDays().then((logs_by_days) => {
     global.db.getLogsByService().then((logs_by_services) => {
