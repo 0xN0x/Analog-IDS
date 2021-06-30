@@ -75,3 +75,4 @@
     ```bash
     sudo systemctl restart rsyslog
     ```
+> :warning: **CHANGEZ VOTRE MOT DE PASSE DÈS VOTRE PREMIÈRE CONNEXION SUR ANALOG**
