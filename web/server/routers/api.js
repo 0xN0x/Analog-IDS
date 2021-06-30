@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 /** Routes de l'API
  * @module routers/api
  * @namespace ApiRoutes
@@ -26,7 +28,8 @@ router.post('/login', (req, res) => {
         res.status(200).send({
           message: "OK",
           data: {
-            email: user[0].mail,
+            id: user[0].id,
+            email: user[0].email,
             firstname: user[0].firstname,
             lastname: user[0].lastname,
             role: user[0].role
@@ -34,6 +37,35 @@ router.post('/login', (req, res) => {
         });
       });
     }
+  });
+});
+
+router.post('/account', (req, res) => {
+  console.log(req.body);
+
+  global.db.updateUser(req.body.id, {
+    email: req.body.email,
+    lastname: req.body.lastname,
+    firstname: req.body.firstname
+  });
+
+  if (req.body.password) {
+    console.log(req.body.password);
+
+    global.db.updatePassword(req.body.id, req.body.password);
+  }
+
+  global.db.getUserByMail(req.body.email).then((user) => {
+    res.status(200).send({
+      message: "OK",
+      data: {
+        id: user[0].id,
+        email: user[0].email,
+        firstname: user[0].firstname,
+        lastname: user[0].lastname,
+        role: user[0].role
+      }
+    });
   });
 });
 

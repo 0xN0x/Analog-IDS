@@ -1,8 +1,5 @@
 const bcrypt = require('bcrypt');
-const BcryptSalt = require('bcrypt-salt');
 const uuid = require('uuid');
-
-const bs = new BcryptSalt();
 
 class Database {
     constructor(host, port, db, io) {
@@ -16,10 +13,8 @@ class Database {
     }
 
     init() {
-        this.checkPasswordValidity(process.env.ADMIN_EMAIL, process.env.ADMIN_PASSWORD).then((val) => {
-            if (val) return;
-
-            this.r.table('users').delete().run().then(() => {
+        this.r.table('users').count().run().then((res) => {
+            if (res === 0) {
                 this.insertUser(
                     process.env.ADMIN_EMAIL, 
                     process.env.ADMIN_PASSWORD,
@@ -27,7 +22,7 @@ class Database {
                     "administrator",
                     "Admin"
                 );
-            });
+            }
         });
 
         this.r.table('log').changes().run().then((cursor) => {
@@ -63,10 +58,10 @@ class Database {
      * @param {String} password 
      * @returns 
      */
-    insertUser(mail, password, firstname, lastname, role) {
+    insertUser(email, password, firstname, lastname, role) {
         return this.r.table('users').insert({
-            email: mail,
-            password: bcrypt.hashSync(password, bs.saltRounds),
+            email: email,
+            password: bcrypt.hashSync(password, global.bs.saltRounds),
             firstname: firstname,
             lastname: lastname,
             role: role
@@ -81,6 +76,16 @@ class Database {
      */
     updateUser(id, update) {
         return this.r.table('users').filter(this.r.row('id').eq(id)).update(update).run();
+    }
+
+    /**
+     * Update the user's password
+     * @param {*} id 
+     * @param {*} password 
+     * @returns 
+     */
+    updatePassword(id, password) {
+        return this.r.table('users').filter(this.r.row('id').eq(id)).update({password: bcrypt.hashSync(password, global.bs.saltRounds)}).run();
     }
 
     /**

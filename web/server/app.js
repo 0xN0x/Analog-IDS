@@ -3,6 +3,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
+const BcryptSalt = require('bcrypt-salt');
+global.bs = new BcryptSalt();
 
 const https = require('https')
 var privateKey  = fs.readFileSync('/opt/cert/analog-server.key', 'utf8');
