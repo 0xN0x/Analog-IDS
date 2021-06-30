@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { Doughnut } from 'react-chartjs-2';
 import {
   Box,
-  Button,
   Card,
   CardContent,
   CardHeader,
@@ -10,7 +9,6 @@ import {
   colors,
   useTheme
 } from '@material-ui/core';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 const LogsByService = (props) => {
   const theme = useTheme();
@@ -69,16 +67,7 @@ const LogsByService = (props) => {
   return (
     <Card {...props}>
       <CardHeader
-        action={(
-          <Button
-            endIcon={<ArrowDropDownIcon />}
-            size="small"
-            variant="text"
-          >
-            Today
-          </Button>
-        )}
-        title="Logs by services"
+        title="Logs by services (today)"
       />
       <Divider />
       <CardContent>

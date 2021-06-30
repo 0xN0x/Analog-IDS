@@ -174,7 +174,7 @@ class Database {
         const today = `${new Date().setHours(0, 0, 0, 0)}`.slice(0, -3);
 
         return this.r.db('analog').table('log').filter(
-            this.r.row('app').eq('ssh')
+            this.r.row('app').eq('sshd')
         ).filter(
             this.r.row('date').gt(`${today}`)
         ).group(
